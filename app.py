@@ -236,8 +236,10 @@ else:
 
                     # 수파베이스에 체결 결과 업데이트 (반복문)
                     for nick, data in assets_dict.items():
-                        supabase.table("stock_assets").update({"cash": data['cash'], "shares": data['shares']}).eq("nickname", nick).eq("class_name", my_class).execute()
-                        
+                        supabase.table("stock_assets").update({
+                            "cash": int(data['cash']), 
+                            "shares": int(data['shares'])
+                        }).eq("nickname", nick).eq("class_name", my_class).execute()
                     st.success(f"🎉 체결 완료! 단일가: {best_price}달러 / 거래량: {max_volume}주")
                 else:
                     st.error("조건이 맞지 않아 거래가 없습니다.")
